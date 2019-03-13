@@ -4,9 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using DynamicRoutine.Entities;
 using DynamicRoutine.SSOT;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace DynamicRoutine.Controllers
 {
@@ -32,6 +34,7 @@ namespace DynamicRoutine.Controllers
 
             ViewBag.Id = id;
             ViewBag.Dashboard = dashboard;
+            ViewBag.Type = type;
 
             var routine = _context.Routines.Include(c => c.Dashboards).FirstOrDefault(c => c.Id.Equals(id));
 
@@ -39,24 +42,39 @@ namespace DynamicRoutine.Controllers
 
             var currentDashboard = routine.Dashboards.FirstOrDefault(c => c.TitleEn.Equals(dashboard));
 
-            /// پیش نویس ها
-            //var query = $"select * from {tblName} where RoutineIsFlown=0 and RoutineStep={currentDashboard.StartStep}";
+            var steps = _context.RoutineSteps.Where(c => c.RoutineId.Equals(id)).ToList();
 
-            // پیش نویس ها با کاربر
+            ViewBag.Steps = steps;
 
+            var query = "";
 
-            var query = $"select * from {tblName} where RoutineIsFlown=0 and RoutineStep={currentDashboard.StartStep} ";
-
-            if (currentDashboard.MultiUser)
+            if (type == DashboardType.Draft)
             {
-                query += $"and {currentDashboard.TitleEn}UserIds like '%\"{userId}\"%'";
+                query = $"select * from {tblName} where RoutineIsFlown=0 and RoutineStep={currentDashboard.StartStep} ";
+
+                if (currentDashboard.MultiUser)
+                {
+                    query += $"and {currentDashboard.TitleEn}UserIds like '%\"{userId}\"%'";
+                }
+                else
+                {
+                    query += $"and {currentDashboard.TitleEn}UserId={userId}";
+                }
             }
-            else
+            dynamic dd = null;
+
+            if (!string.IsNullOrEmpty(query))
             {
-                query += $"and {currentDashboard.TitleEn}UserId={userId}";
+                dd = _connection.Query<dynamic>(query);
             }
 
-            var dd = _connection.Query<dynamic>(query);
+
+            return View(dd);
+        }
+
+        public IActionResult ChangeDash(int id,int recordId, DashboardType type, string dashboard = "", RoutneAction action = RoutneAction.Send)
+        {
+            var routine = _context.Routines.Include(c => c.Steps).FirstOrDefault(c => c.Id.Equals(id));
 
             return View();
         }

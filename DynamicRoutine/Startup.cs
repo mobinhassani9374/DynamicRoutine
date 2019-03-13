@@ -21,14 +21,17 @@ namespace DynamicRoutine
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //var connectionString = "Data Source=WIN-SQL\\MSSQLSERVER2016;Initial Catalog=Mobin.Routine;Persist Security Info=True;User ID=sa; Password=exir@123; MultipleActiveResultSets=True";
+
+            var connectionString = "Data Source=.;Initial Catalog=Mobin.DynamicRoutine;Integrated Security=True";
             services.AddDbContext<Data.AppDbContext>(options =>
             {
-                options.UseSqlServer("Data Source=WIN-SQL\\MSSQLSERVER2016;Initial Catalog=Mobin.Routine;Persist Security Info=True;User ID=sa; Password=exir@123; MultipleActiveResultSets=True");
+                options.UseSqlServer(connectionString);
             });
 
             services
                 .AddSingleton<IDbConnection>(new 
-                SqlConnection("Data Source=WIN-SQL\\MSSQLSERVER2016;Initial Catalog=Mobin.Routine;Persist Security Info=True;User ID=sa; Password=exir@123; MultipleActiveResultSets=True"));
+                SqlConnection(connectionString));
 
             services
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
