@@ -1,0 +1,21 @@
+﻿@using DynamicRoutine.Entities
+@using DynamicRoutine.SSOT
+@model List<RoutineDashboard>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @foreach(var item in Model)
+    {
+        <p><a href="/Launcher/Manage?id=@(ViewBag.Id)&type=@(DashboardType.Draft)&dashboard=@(item.TitleEn)">کارتابل @(item.Title)</a></p>
+    }
+</body>
+</html>

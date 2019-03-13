@@ -1,0 +1,47 @@
+﻿@using DynamicRoutine.Entities
+@model List<RoutineDashboard>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+            table td {
+                padding: 10px;
+                border: 1px solid red;
+            }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>TitleEn</td>
+            <td>StartStep</td>
+            <td>Multi User</td>
+            <td>Delete</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Title</td>
+            <td>@item.TitleEn</td>
+            <td>@item.StartStep</td>
+            <td>@item.MultiUser</td>
+            <td><a href="/RoutineDashboard/Delete/@(item.Id)">Delete</a></td>
+        </tr>
+        }
+    </table>
+</body>
+</html>

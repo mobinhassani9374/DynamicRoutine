@@ -1,0 +1,53 @@
+﻿@model List<DynamicRoutine.Entities.Routine>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+            table td {
+                padding: 10px;
+                border: 1px solid red;
+            }
+    </style>
+</head>
+<body>
+    <p><a href="/Routine/Create">Create New Routine</a></p>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>TitleEn</td>
+            <td>Count Dashboard</td>
+            <td>Define Dashboard</td>
+            <td>GetAll Dashboard</td>
+            <td>Routine</td>
+            <td>Save</td>
+            <td>Launcher</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.Id)</td>
+                <td>@item.Title</td>
+                <td>@item.TitleEn</td>
+                <td>@(item.Dashboards.Count())</td>
+                <td><a href="/RoutineDashboard/Create/@(item.Id)">Create Dashboard</a></td>
+                <td><a href="/RoutineDashboard/Index/@(item.Id)">GetAll Dashboard</a></td>
+                <td><a href="/RoutineStep/Manage/@(item.Id)">Manage Routine</a></td>
+                <td><a href="/Routine/Save/@(item.Id)">Save</a></td>
+                <td><a href="/Launcher/Index/@(item.Id)">Launch</a></td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

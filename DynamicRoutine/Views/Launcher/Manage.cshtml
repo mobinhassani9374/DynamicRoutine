@@ -1,0 +1,19 @@
+﻿@using DynamicRoutine.SSOT
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manage</title>
+</head>
+<body>
+    <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.Draft)&dashboard=@(ViewBag.Dashboard)">پیش نویس ها</a></p>
+    <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.New)&dashboard=@(ViewBag.Dashboard)">تازه ها</a></p>
+    <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.Sent)&dashboard=@(ViewBag.Dashboard)">ارسال شده ها</a></p>
+    <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.Done)&dashboard=@(ViewBag.Dashboard)">خاتمه یافته ها</a></p>
+</body>
+</html>

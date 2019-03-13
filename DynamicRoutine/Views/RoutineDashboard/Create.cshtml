@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <form method="post">
+        <input type="hidden" name="routineId" value="@(ViewBag.RoutineId)"/>
+        <p><input type="text" name="title" placeholder="Title" /></p>
+        <p><input type="text" name="titleEn" placeholder="TitleEn" /></p>
+        <p>MultiUser : @Html.CheckBox("multiUser")</p>
+        <p><input type="submit" value="Create" /></p>
+    </form>
+</body>
+</html>
