@@ -90,6 +90,40 @@ namespace DynamicRoutine.Controllers
             if (type == DashboardType.New)
             {
                 query = $"select * from {tblName} where RoutineIsFlown=1 and RoutineStep={currentDashboard.StartStep}";
+                if (currentDashboard.MultiUser)
+                {
+                    query += $" and ({currentDashboard.TitleEn}UserIds like '%\"{userId}\"%' or {currentDashboard.TitleEn}UserIds is null)";
+                }
+                else
+                {
+                    query += $" and ({currentDashboard.TitleEn}UserId={userId} or {currentDashboard.TitleEn}UserId is null)";
+                }
+
+            }
+
+            if (type == DashboardType.Done)
+            {
+                // داخل لاگ باشه و مخالف step جاری باشد
+                var logs = _context.RoutineLog.Where(c => c.RoutineId.Equals(id) && c.UserId.Equals(userId)).ToList();
+
+                var logEntityIds = logs.Select(c => c.EntityId).ToList();
+
+                if (logEntityIds.Count > 0)
+                {
+                    var logEntityIdsQuery = "";
+                    logEntityIds.ForEach(c =>
+                    {
+                        logEntityIdsQuery += $"{c},";
+                    });
+                    if (logEntityIdsQuery.EndsWith(","))
+                    {
+                        logEntityIdsQuery = logEntityIdsQuery.Remove(logEntityIdsQuery.Length - 1);
+                    }
+
+
+                    var currentStep = currentDashboard.StartStep;
+                    query = $"select * from {tblName} where Id in({logEntityIdsQuery}) and RoutineIsDone=1";
+                }
             }
 
             dynamic dd = null;
@@ -130,12 +164,26 @@ namespace DynamicRoutine.Controllers
             });
             _context.SaveChanges();
 
+            var toStepStr = "null";
+            if(toStep.HasValue)
+            {
+                toStepStr = toStep.Value.ToString();
+            }
+
             // update current record
-            var update_query = $"update {tblName} set RoutineStep={toStep} , ";
+            var update_query = $"update {tblName} set RoutineStep={toStepStr} ,";
 
             if (!record.RoutineIsFlown)
             {
                 update_query += " RoutineIsFlown=1 ,";
+            }
+            if (action == RoutneAction.ConfirmAndFinihs)
+            {
+                update_query += " RoutineIsDone=1 , RoutineIsSuccess=1 ,";
+            }
+            if (action == RoutneAction.Cancel)
+            {
+                update_query += " RoutineIsDone=1 , RoutineIsSuccess=0 ,";
             }
 
             if (update_query.EndsWith(","))

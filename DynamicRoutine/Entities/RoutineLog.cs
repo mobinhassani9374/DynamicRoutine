@@ -11,7 +11,7 @@ namespace DynamicRoutine.Entities
 
         public int FromStep { get; set; }
 
-        public int ToStep { get; set; }
+        public int? ToStep { get; set; }
 
         public virtual Routine Routine { get; set; }
 

@@ -13,7 +13,7 @@ namespace DynamicRoutine.Entities
 
         public int FromStep { get; set; }
 
-        public int ToStep { get; set; }
+        public int? ToStep { get; set; }
 
         public RoutneAction Action { get; set; }
 

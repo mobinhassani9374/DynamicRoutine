@@ -28,8 +28,12 @@ namespace DynamicRoutine.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Manage(int routineId, int from, int to, RoutneAction action)
+        public IActionResult Manage(int routineId, int from, int? to, RoutneAction action)
         {
+            if(action== RoutneAction.ConfirmAndFinihs || action== RoutneAction.Cancel)
+            {
+                to = null;
+            }
             _context.RoutineSteps.Add(new RoutineStep
             {
                 Action = action,

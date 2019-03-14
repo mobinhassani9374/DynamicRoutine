@@ -57,19 +57,47 @@
                             {
                                 if (a.Action == RoutneAction.Cancel)
                                 {
-                                    <button asp-route-action="@(RoutneAction.Cancel)" asp-route-recordId="@(item.Id)">رد</button>
+                        <form asp-action="ChangeDash">
+                            <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                            <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                            <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                            <input type="hidden" name="recordId" value="@(item.Id)" />
+                            <input type="hidden" name="action" value="@(RoutneAction.Cancel)" />
+                            <input type="submit" value="رد" />
+                        </form>
                                 }
                                 else if (a.Action == RoutneAction.Confirm)
                                 {
-                                    <button>تایید</button>
+                        <form asp-action="ChangeDash">
+                            <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                            <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                            <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                            <input type="hidden" name="recordId" value="@(item.Id)" />
+                            <input type="hidden" name="action" value="@(RoutneAction.Confirm)" />
+                            <input type="submit" value="تایید" />
+                        </form>
                                 }
                                 else if (a.Action == RoutneAction.ConfirmAndFinihs)
                                 {
-                                    <button>تایید و پایان</button>
+                                    <form asp-action="ChangeDash">
+                                        <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                                        <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                                        <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                                        <input type="hidden" name="recordId" value="@(item.Id)" />
+                                        <input type="hidden" name="action" value="@(RoutneAction.ConfirmAndFinihs)" />
+                                        <input type="submit" value="تایید و پایان" />
+                                    </form>
                                 }
                                 else if (a.Action == RoutneAction.Edit)
                                 {
-                                    <button>نیاز به اصلاح</button>
+                                    <form asp-action="ChangeDash">
+                                        <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                                        <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                                        <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                                        <input type="hidden" name="recordId" value="@(item.Id)" />
+                                        <input type="hidden" name="action" value="@(RoutneAction.Edit)" />
+                                        <input type="submit" value="نیاز به اصلاح" />
+                                    </form>
                                 }
                                 // send
                                 else

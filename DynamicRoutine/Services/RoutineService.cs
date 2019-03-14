@@ -14,7 +14,7 @@ namespace DynamicRoutine.Services
             query += "RoutineIsFlown bit not null,";
             query += "RoutineIsSuccess bit not null,";
             query += "RoutineIsDone bit not null,";
-            query += "RoutineStep int not null,";
+            query += "RoutineStep int  null,";
             query += "RoutineFlownDate datetime null,";
 
             dashboards.ForEach(c =>
