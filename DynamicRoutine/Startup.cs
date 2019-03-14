@@ -70,6 +70,31 @@ namespace DynamicRoutine
                     FullName = "مبین حسنی"
                 });
 
+                db.Users.Add(new Entities.User
+                {
+                    IsAdmin = false,
+                    Password = "123456",
+                    UserName = "mobin1",
+                    FullName = "مبین حسنی 1"
+                });
+
+                db.Users.Add(new Entities.User
+                {
+                    IsAdmin = false,
+                    Password = "123456",
+                    UserName = "mobin2",
+                    FullName = "مبین حسنی 2"
+                });
+
+
+                db.Users.Add(new Entities.User
+                {
+                    IsAdmin = false,
+                    Password = "123456",
+                    UserName = "mobin3",
+                    FullName = "مبین حسنی 3"
+                });
+
                 db.SaveChanges();
             }
 
