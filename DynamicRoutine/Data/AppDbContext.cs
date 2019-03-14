@@ -18,5 +18,7 @@ namespace DynamicRoutine.Data
         public DbSet<RoutineDashboard> RoutineDashboards { get; set; }
 
         public DbSet<RoutineStep> RoutineSteps { get; set; }
+
+        public DbSet<RoutineLog> RoutineLog { get; set; }
     }
 }

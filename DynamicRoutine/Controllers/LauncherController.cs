@@ -61,6 +61,37 @@ namespace DynamicRoutine.Controllers
                     query += $"and {currentDashboard.TitleEn}UserId={userId}";
                 }
             }
+
+            if (type == DashboardType.Sent)
+            {
+                // داخل لاگ باشه و مخالف step جاری باشد
+                var logs = _context.RoutineLog.Where(c => c.RoutineId.Equals(id) && c.UserId.Equals(userId)).ToList();
+
+                var logEntityIds = logs.Select(c => c.EntityId).ToList();
+
+                if (logEntityIds.Count > 0)
+                {
+                    var logEntityIdsQuery = "";
+                    logEntityIds.ForEach(c =>
+                    {
+                        logEntityIdsQuery += $"{c},";
+                    });
+                    if (logEntityIdsQuery.EndsWith(","))
+                    {
+                        logEntityIdsQuery = logEntityIdsQuery.Remove(logEntityIdsQuery.Length - 1);
+                    }
+
+
+                    var currentStep = currentDashboard.StartStep;
+                    query = $"select * from {tblName} where Id in({logEntityIdsQuery}) and RoutineStep!={currentStep}";
+                }
+            }
+
+            if (type == DashboardType.New)
+            {
+                query = $"select * from {tblName} where RoutineIsFlown=1 and RoutineStep={currentDashboard.StartStep}";
+            }
+
             dynamic dd = null;
 
             if (!string.IsNullOrEmpty(query))
@@ -72,11 +103,56 @@ namespace DynamicRoutine.Controllers
             return View(dd);
         }
 
-        public IActionResult ChangeDash(int id,int recordId, DashboardType type, string dashboard = "", RoutneAction action = RoutneAction.Send)
+        public IActionResult ChangeDash(int id, DashboardType type, string dashboard = "", RoutneAction action = RoutneAction.Send, int recordId = 0)
         {
+            var userId = Convert.ToInt32(User.Identity.Name);
+
             var routine = _context.Routines.Include(c => c.Steps).FirstOrDefault(c => c.Id.Equals(id));
 
-            return View();
+            var tblName = routine.TitleEn;
+
+            var record = _connection.Query<dynamic>($"select * from {tblName} where Id={recordId}").FirstOrDefault();
+
+            var currentStep = record.RoutineStep;
+
+            var toStep = routine.Steps.Where(c => c.Action == action && c.FromStep == currentStep).FirstOrDefault().ToStep;
+
+
+            // log
+            _context.RoutineLog.Add(new RoutineLog
+            {
+                Action = action,
+                FromStep = currentStep,
+                UserId = userId,
+                RoutineId = id,
+                ToStep = toStep,
+                EntityId = recordId
+            });
+            _context.SaveChanges();
+
+            // update current record
+            var update_query = $"update {tblName} set RoutineStep={toStep} , ";
+
+            if (!record.RoutineIsFlown)
+            {
+                update_query += " RoutineIsFlown=1 ,";
+            }
+
+            if (update_query.EndsWith(","))
+            {
+                update_query = update_query.Remove(update_query.Length - 1);
+            }
+
+            update_query += $" where Id={recordId}";
+
+            var update_query_result = _connection.Execute(update_query);
+
+            return RedirectToAction(nameof(Manage), new
+            {
+                id = id,
+                type = type,
+                dashboard = dashboard
+            });
         }
     }
 }

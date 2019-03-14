@@ -5,6 +5,7 @@
 @{
     Layout = null;
     var steps = (List<RoutineStep>)ViewBag.Steps;
+    var type = (DashboardType)ViewBag.Type;
 }
 
 <!DOCTYPE html>
@@ -30,25 +31,29 @@
     <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.Sent)&dashboard=@(ViewBag.Dashboard)">ارسال شده ها</a></p>
     <p><a href="?id=@(ViewBag.Id)&type=@(DashboardType.Done)&dashboard=@(ViewBag.Dashboard)">خاتمه یافته ها</a></p>
 
-    <form >
-        <table>
-            <tr>
-                <td>ID</td>
-                <td>RoutineStep</td>
-                <td>Operations</td>
-            </tr>
-            @if (Model != null)
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>RoutineStep</td>
+            <td>Operations</td>
+        </tr>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
             {
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@(item.Id)</td>
-                        <td>@(item.RoutineStep)</td>
-                        <td>
-                            @{
-                                var actions = steps.Where(c => c.FromStep.Equals(item.RoutineStep)).ToList();
-                            }
-                            @foreach (var a in actions)
+                <tr>
+                    <td>
+
+                        @(item.Id)
+                    </td>
+                    <td>@(item.RoutineStep)</td>
+                    <td>
+                        @{
+                            var actions = steps.Where(c => c.FromStep.Equals(item.RoutineStep)).ToList();
+                        }
+                        @foreach (var a in actions)
+                        {
+                            if (type == DashboardType.Draft || type == DashboardType.New)
                             {
                                 if (a.Action == RoutneAction.Cancel)
                                 {
@@ -69,17 +74,28 @@
                                 // send
                                 else
                                 {
-                                    <button asp-action="ChangeDash" asp-route-id="@(ViewBag.Id)" asp-route-type="@(ViewBag.Type)" asp-route-dashboard="@(ViewBag.Dashboard)" asp-route-action="@(RoutneAction.Send)" asp-route-recordId="@(item.Id)">ارسال</button>
+                                    <form asp-action="ChangeDash">
+                                        <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                                        <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                                        <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                                        <input type="hidden" name="recordId" value="@(item.Id)" />
+                                        <input type="hidden" name="action" value="@(RoutneAction.Send)" />
+                                        <input type="submit" value="ارسال" />
+                                    </form>
+
+
                                 }
-
                             }
-                        </td>
-                    </tr>
-                }
-            }
 
-        </table>
-    </form>
+
+                        }
+                    </td>
+                </tr>
+            }
+        }
+
+    </table>
+
 
 
 

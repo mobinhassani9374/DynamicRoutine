@@ -20,5 +20,7 @@ namespace DynamicRoutine.Entities
         public int UserId { get; set; }
 
         public RoutneAction Action { get; set; }
+
+        public int EntityId { get; set; }
     }
 }
