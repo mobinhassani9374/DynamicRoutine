@@ -30,43 +30,41 @@ namespace DynamicRoutine.Services
                 }
             });
 
-            int fieldCounter = 1;
-
             fields.ForEach(c =>
             {
                 switch (c.Type)
                 {
                     case SSOT.FieldType.Text:
                         {
-                            query += $"Field_{fieldCounter} nvarchar(MAX) null,";
+                            query += $"Field_{c.TitleEn} nvarchar(MAX) null,";
 
                             break;
                         }
                        
                     case SSOT.FieldType.Number:
                         {
-                            query += $"Field_{fieldCounter} bigint null,";
+                            query += $"Field_{c.TitleEn} bigint null,";
                             break;
                         }
                     case SSOT.FieldType.File:
                         {
-                            query += $"Field_{fieldCounter} nvarchar(MAX) null,";
+                            query += $"Field_{c.TitleEn} nvarchar(MAX) null,";
                             break;
                         }
                     case SSOT.FieldType.TextArea:
                         {
-                            query += $"Field_{fieldCounter} nvarchar(MAX) null,";
+                            query += $"Field_{c.TitleEn} nvarchar(MAX) null,";
                             break;
                         }
                     case SSOT.FieldType.DropDown:
                         {
-                            query += $"Field_{fieldCounter}_Drop_Text nvarchar(MAX) null,";
-                            query += $"Field_{fieldCounter}_Drop_Value int null,";
+                            query += $"Field_{c.TitleEn}_Drop_Text nvarchar(MAX) null,";
+                            query += $"Field_{c.TitleEn}_Drop_Value int null,";
                             break;
                         }
                     case SSOT.FieldType.DateTime:
                         {
-                            query += $"Field_{fieldCounter} datetime null,";
+                            query += $"Field_{c.TitleEn} datetime null,";
                             break;
                         }
                     default:
@@ -74,8 +72,6 @@ namespace DynamicRoutine.Services
                             break;
                         }
                 }
-
-                fieldCounter++;
             });
 
             if (query.EndsWith(","))

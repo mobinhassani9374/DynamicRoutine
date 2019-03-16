@@ -27,16 +27,18 @@
     <form asp-action="Create">
         <input type="hidden" name="routineId" value="@ViewBag.RoutineId" />
         <p>Title : <input type="text" name="title" /></p>
+        <p>TitleEn : <input type="text" name="titleEn" /></p>
         <p>Type : <select name="type" asp-items="Html.GetEnumSelectList<FieldType>()"></select></p>
         <p>Url : <input type="text" name="Url" /></p>
         <p>IsRequide : @Html.CheckBox("isRequide")</p>
-        <p><input type="submit" value="Save"/></p>
+        <p><input type="submit" value="Save" /></p>
     </form>
     <hr />
     <table>
         <tr>
             <td>#</td>
             <td>title</td>
+            <td>TitleEn</td>
             <td>Type</td>
             <td>TypeDes</td>
             <td>Url</td>
@@ -48,6 +50,7 @@
         <tr>
             <td>@(item.Id)</td>
             <td>@(item.Title)</td>
+            <td>@item.TitleEn</td>
             <td>@item.Type</td>
             <td>@item.FieldTypeDes</td>
             <td>@item.Url</td>

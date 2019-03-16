@@ -16,6 +16,12 @@ namespace DynamicRoutine.Entities
         [MaxLength(300)]
         public string Title { get; set; }
 
+        /// <summary>
+        /// عنوان فیلد
+        /// </summary>
+        [MaxLength(300)]
+        public string TitleEn { get; set; }
+
         public SSOT.FieldType Type { get; set; }
 
         [MaxLength(100)]

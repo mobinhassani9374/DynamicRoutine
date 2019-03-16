@@ -21,7 +21,7 @@ namespace DynamicRoutine.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Create(int routineId, string title, string Url, FieldType type, bool isRequide)
+        public IActionResult Create(int routineId, string title, string Url, FieldType type, bool isRequide, string titleEn)
         {
             _context.RoutineFields.Add(new Entities.RoutineField
             {
@@ -30,7 +30,8 @@ namespace DynamicRoutine.Controllers
                 RoutineId = routineId,
                 Title = title,
                 Type = type,
-                Url = Url
+                Url = Url,
+                TitleEn = titleEn
             });
             _context.SaveChanges();
 
