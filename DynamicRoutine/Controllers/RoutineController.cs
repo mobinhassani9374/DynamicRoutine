@@ -46,9 +46,11 @@ namespace DynamicRoutine.Controllers
         {
             var dashboards = _context.RoutineDashboards.Where(c => c.RoutineId.Equals(id)).ToList();
 
+            var fields = _context.RoutineFields.Where(c => c.RoutineId.Equals(id)).ToList();
+
             var routine = _context.Routines.FirstOrDefault(c => c.Id.Equals(id));
 
-            var query = Services.RoutineService.GetQuery_CreateTable(routine.TitleEn, dashboards);
+            var query = Services.RoutineService.GetQuery_CreateTable(routine.TitleEn, dashboards, fields);
 
             _connection.Query(query);
 
