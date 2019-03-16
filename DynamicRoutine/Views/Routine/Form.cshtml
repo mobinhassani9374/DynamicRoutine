@@ -43,7 +43,12 @@
        <p>-----</p>
         @if(Model!=null)
         {
-            <p>not null</p>
+            <p>Action : @Model.Action</p>
+            <p>FieldJson : @Model.FieldJson</p>
+            <p>FromStep : @Model.FromStep</p>
+            <p>PreviousIsEdit : @Model.PreviousIsEdit</p>
+            <p>type : @Model.Type</p>
+            <p>title : @Model.Title</p>
         }
     </form>
 </body>
