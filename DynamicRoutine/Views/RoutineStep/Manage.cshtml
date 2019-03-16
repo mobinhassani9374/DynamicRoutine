@@ -12,6 +12,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Manage</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+            table td {
+                padding: 10px;
+                border: 1px solid red;
+            }
+    </style>
 </head>
 <body>
     <p>Steps : </p>
@@ -23,6 +33,7 @@
             <td>ToStep</td>
             <td>ToTitle</td>
             <td>Action</td>
+            <td>CustomAction - Form</td>
             <td>Delete</td>
         </tr>
         @foreach(var item in steps)
@@ -34,6 +45,13 @@
             <td>@item.ToStep</td>
             <td>@dashboards.Where(c => c.StartStep == item.ToStep).FirstOrDefault()?.Title</td>
             <td>@item.Action</td>
+            <td>
+                <a asp-action="Form" asp-route-routineId="@(ViewBag.RoutineId)" asp-route-fromStep="@(item.FromStep)" asp-route-action="@(item.Action)" asp-route-previousIsEdit="false">form</a>
+                @if(steps.Any(c => c.FromStep.Equals(item.ToStep) && c.ToStep.Equals(item.FromStep) && c.Action == RoutneAction.Edit))
+                {
+                    <a asp-action="Form" asp-route-routineId="@(ViewBag.RoutineId)" asp-route-fromStep="@(item.FromStep)" asp-route-action="@(item.Action)" asp-route-previousIsEdit="false">ارسال و قبلش نیاز به اصلاح است</a>
+                }
+            </td>
             <td><a href="/RoutineStep/Delete/@(item.Id)">Delete</a></td>
         </tr>
         }

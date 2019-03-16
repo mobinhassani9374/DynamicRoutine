@@ -18,7 +18,9 @@ namespace DynamicRoutine.Entities
 
         public virtual Routine Routine { get; set; }
 
-        public RoutneAction FromStep { get; set; }
+        public int FromStep { get; set; }
+
+        public RoutneAction Action { get; set; }
 
         public bool PreviousIsEdit { get; set; }
 

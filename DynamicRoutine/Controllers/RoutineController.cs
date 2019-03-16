@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dapper;
+using DynamicRoutine.Entities;
 
 namespace DynamicRoutine.Controllers
 {
@@ -55,6 +56,12 @@ namespace DynamicRoutine.Controllers
             _connection.Query(query);
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Form(int routineId, int fromStep, RoutneAction action, bool previousIsEdit)
+        {
+            return View();
         }
     }
 }
