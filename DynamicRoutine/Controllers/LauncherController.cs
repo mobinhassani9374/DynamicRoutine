@@ -133,6 +133,11 @@ namespace DynamicRoutine.Controllers
                 dd = _connection.Query<dynamic>(query);
             }
 
+            var forms = _context.RoutineForms.Where(c => c.RoutineId.Equals(id)).ToList();
+            ViewBag.Forms = forms;
+
+            var lastLog = _context.RoutineLog.LastOrDefault(c => c.RoutineId.Equals(id));
+            ViewBag.LastLog = lastLog;
 
             return View(dd);
         }
@@ -165,7 +170,7 @@ namespace DynamicRoutine.Controllers
             _context.SaveChanges();
 
             var toStepStr = "null";
-            if(toStep.HasValue)
+            if (toStep.HasValue)
             {
                 toStepStr = toStep.Value.ToString();
             }

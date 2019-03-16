@@ -6,6 +6,13 @@
     Layout = null;
     var steps = (List<RoutineStep>)ViewBag.Steps;
     var type = (DashboardType)ViewBag.Type;
+    var forms = (List<RoutineForm>)ViewBag.Forms;
+    var lastLog = (RoutineLog)ViewBag.LastLog;
+    bool pre = false;
+    if (lastLog != null && lastLog.Action == RoutneAction.Edit)
+    {
+        pre = true;
+    }
 }
 
 <!DOCTYPE html>
@@ -57,25 +64,25 @@
                             {
                                 if (a.Action == RoutneAction.Cancel)
                                 {
-                        <form asp-action="ChangeDash">
-                            <input type="hidden" name="id" value="@(ViewBag.Id)" />
-                            <input type="hidden" name="type" value="@(ViewBag.Type)" />
-                            <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
-                            <input type="hidden" name="recordId" value="@(item.Id)" />
-                            <input type="hidden" name="action" value="@(RoutneAction.Cancel)" />
-                            <input type="submit" value="رد" />
-                        </form>
+                                    <form asp-action="ChangeDash">
+                                        <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                                        <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                                        <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                                        <input type="hidden" name="recordId" value="@(item.Id)" />
+                                        <input type="hidden" name="action" value="@(RoutneAction.Cancel)" />
+                                        <input type="submit" value="رد" />
+                                    </form>
                                 }
                                 else if (a.Action == RoutneAction.Confirm)
                                 {
-                        <form asp-action="ChangeDash">
-                            <input type="hidden" name="id" value="@(ViewBag.Id)" />
-                            <input type="hidden" name="type" value="@(ViewBag.Type)" />
-                            <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
-                            <input type="hidden" name="recordId" value="@(item.Id)" />
-                            <input type="hidden" name="action" value="@(RoutneAction.Confirm)" />
-                            <input type="submit" value="تایید" />
-                        </form>
+                                    <form asp-action="ChangeDash">
+                                        <input type="hidden" name="id" value="@(ViewBag.Id)" />
+                                        <input type="hidden" name="type" value="@(ViewBag.Type)" />
+                                        <input type="hidden" name="dashboard" value="@(ViewBag.Dashboard)" />
+                                        <input type="hidden" name="recordId" value="@(item.Id)" />
+                                        <input type="hidden" name="action" value="@(RoutneAction.Confirm)" />
+                                        <input type="submit" value="تایید" />
+                                    </form>
                                 }
                                 else if (a.Action == RoutneAction.ConfirmAndFinihs)
                                 {
@@ -110,6 +117,8 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.Send)" />
                                         <input type="submit" value="ارسال" />
                                     </form>
+
+                                    
 
 
                                 }
