@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Dapper;
 using DynamicRoutine.Entities;
+using DynamicRoutine.SSOT;
 
 namespace DynamicRoutine.Controllers
 {
@@ -59,9 +60,39 @@ namespace DynamicRoutine.Controllers
         }
 
 
-        public IActionResult Form(int routineId, int fromStep, RoutneAction action, bool previousIsEdit)
+        public IActionResult Form(int routineId, int fromStep, RoutneAction actionType, bool previousIsEdit)
         {
-            return View();
+            var fields = _context.RoutineFields.Where(c => c.RoutineId.Equals(routineId)).ToList();
+
+            ViewBag.Fields = fields;
+
+            ViewBag.Action = actionType;
+            ViewBag.RoutineId = routineId;
+            ViewBag.FromStep = fromStep;
+            ViewBag.PreviousIsEdit = previousIsEdit;
+
+            var model = _context.RoutineForms.FirstOrDefault(c => c.RoutineId.Equals(routineId) && c.FromStep.Equals(fromStep) && c.Action.Equals(actionType) && c.PreviousIsEdit.Equals(previousIsEdit));
+
+
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Form(int routineId, int fromStep, RoutneAction actionType, bool previousIsEdit, List<int> fields, FormType type, string title)
+        {
+            _context.RoutineForms.Add(new RoutineForm
+            {
+                Action = actionType,
+                FromStep = fromStep,
+                PreviousIsEdit = previousIsEdit,
+                RoutineId = routineId,
+                Title = title,
+                Type = type,
+                FieldJson = Newtonsoft.Json.JsonConvert.SerializeObject(fields.Select(c => c.ToString()).ToList())
+            });
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
