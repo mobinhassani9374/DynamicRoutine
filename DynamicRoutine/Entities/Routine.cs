@@ -18,5 +18,7 @@ namespace DynamicRoutine.Entities
         public virtual ICollection<RoutineStep> Steps { get; set; }
 
         public virtual ICollection<RoutineLog> Logs { get; set; }
+
+        public virtual ICollection<RoutineField> Fields { get; set; }
     }
 }
