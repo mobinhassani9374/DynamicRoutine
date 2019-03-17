@@ -26,5 +26,7 @@ namespace DynamicRoutine.Data
         public DbSet<RoutineCustomAction> RoutineCustomAction { get; set; }
 
         public DbSet<RoutineCustomActionField> RoutineCustomActionFields { get; set; }
+
+        public DbSet<UserRoutineField> UserRoutineFields { get; set; }
     }
 }

@@ -36,5 +36,8 @@ namespace DynamicRoutine.Entities
         public virtual Routine Routine { get; set; }
 
         public int RoutineId { get; set; }
+
+
+        public virtual ICollection<UserRoutineField> Users { get; set; }
     }
 }

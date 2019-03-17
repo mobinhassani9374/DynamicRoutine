@@ -21,5 +21,8 @@ namespace DynamicRoutine.Entities
         public string FullName { get; set; }
 
         public bool IsAdmin { get; set; }
+
+
+        public virtual ICollection<UserRoutineField> RoutineFields { get; set; }
     }
 }
