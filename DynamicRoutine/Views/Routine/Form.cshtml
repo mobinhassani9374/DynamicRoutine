@@ -1,0 +1,39 @@
+﻿@using DynamicRoutine.Entities
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@model RoutineCustomAction
+@{
+    Layout = null;
+    var fields = (List<RoutineField>)ViewBag.Fields;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Form</title>
+</head>
+<body>
+    <p>@Model.Title</p>
+    <form method="post">
+        <input type="hidden" name="routineCustomActionId" value="@ViewBag.Id"/>
+
+        @foreach (var item in Model.Fileds)
+        {
+            var filed = fields.FirstOrDefault(c => c.Id.Equals(item.FieldId));
+            if (filed != null)
+            {
+                <p>@filed?.Title</p>
+                if (filed.Type == DynamicRoutine.SSOT.FieldType.Text)
+                {
+                    <input type="text" name="fld_@(filed.TitleEn)" />
+                }
+            }
+
+        }
+        <p><input type="submit" value="save" /></p>
+    </form>
+
+
+</body>
+</html>

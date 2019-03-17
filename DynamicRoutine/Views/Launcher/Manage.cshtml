@@ -133,7 +133,7 @@
                                     var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.Send).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
                                     for (int i = 0; i < customActions.Count; i++)
                                     {
-                                    <button>(@customActions[i].Title) - Send</button>
+                                    <button onclick="window.location='/Routine/Form/@(customActions[i].Id)'">(@customActions[i].Title) - Send</button>
                                     }
                                 }
                             }

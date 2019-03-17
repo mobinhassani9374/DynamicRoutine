@@ -58,5 +58,35 @@ namespace DynamicRoutine.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// id=CustomActionId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IActionResult Form(int id)
+        {
+            ViewBag.Id = id;
+
+            var model = _context
+                .RoutineCustomAction
+                .Include(c => c.Fileds)
+                .FirstOrDefault(c => c.Id.Equals(id));
+
+            var fieldIds = model.Fileds.Select(c => c.FieldId).ToList();
+
+            var fields = _context.RoutineFields.Where(c => fieldIds.Contains(c.Id)).ToList();
+            ViewBag.Fields = fields;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Form()
+        {
+            var frm = HttpContext.Request.Form;
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
