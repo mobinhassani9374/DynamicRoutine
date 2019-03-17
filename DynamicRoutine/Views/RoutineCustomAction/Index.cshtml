@@ -1,0 +1,49 @@
+﻿@using DynamicRoutine.Entities
+@model List<RoutineCustomAction>
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+            table td {
+                padding: 10px;
+                border: 1px solid red;
+            }
+    </style>
+</head>
+<body>
+    <form asp-action="Create" method="post">
+        <input type="hidden" name="stepId" value="@ViewBag.StepId"/>
+        <p><input type="text" name="title" placeholder="Title"/></p>
+        <input type="submit" value="Save"/>
+    </form>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>Fileds</td>
+            <td>Delete</td>
+        </tr>
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@(item.Id)</td>
+            <td>@(item.Title)</td>
+            <td></td>
+            <td><a asp-action="Delete" asp-route-id="@(item.Id)">Delete</a></td>
+        </tr>
+        }
+    </table>
+</body>
+</html>

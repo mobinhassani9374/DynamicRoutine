@@ -20,6 +20,8 @@ namespace DynamicRoutine.Entities
         public virtual Routine Routine { get; set; }
 
         public int RoutineId { get; set; }
+
+        public virtual ICollection<RoutineCustomAction> CustomActions { get; set; }
     }
 
     public enum RoutneAction

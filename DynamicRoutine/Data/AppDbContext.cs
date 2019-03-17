@@ -22,5 +22,7 @@ namespace DynamicRoutine.Data
         public DbSet<RoutineLog> RoutineLog { get; set; }
 
         public DbSet<RoutineField> RoutineFields { get; set; }
+
+        public DbSet<RoutineCustomAction> RoutineCustomAction { get; set; }
     }
 }
