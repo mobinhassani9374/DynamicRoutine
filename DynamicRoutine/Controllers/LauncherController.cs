@@ -42,7 +42,7 @@ namespace DynamicRoutine.Controllers
 
             var currentDashboard = routine.Dashboards.FirstOrDefault(c => c.TitleEn.Equals(dashboard));
 
-            var steps = _context.RoutineSteps.Where(c => c.RoutineId.Equals(id)).ToList();
+            var steps = _context.RoutineSteps.Include(c=>c.CustomActions).Where(c => c.RoutineId.Equals(id)).ToList();
 
             ViewBag.Steps = steps;
 
@@ -133,9 +133,6 @@ namespace DynamicRoutine.Controllers
                 dd = _connection.Query<dynamic>(query);
             }
 
-
-            var lastLog = _context.RoutineLog.LastOrDefault(c => c.RoutineId.Equals(id));
-            ViewBag.LastLog = lastLog;
 
             return View(dd);
         }

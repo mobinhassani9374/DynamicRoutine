@@ -6,12 +6,6 @@
     Layout = null;
     var steps = (List<RoutineStep>)ViewBag.Steps;
     var type = (DashboardType)ViewBag.Type;
-    var lastLog = (RoutineLog)ViewBag.LastLog;
-    bool pre = false;
-    if (lastLog != null && lastLog.Action == RoutneAction.Edit)
-    {
-        pre = true;
-    }
 }
 
 <!DOCTYPE html>
@@ -71,6 +65,11 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.Cancel)" />
                                         <input type="submit" value="رد" />
                                     </form>
+                                    var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.Cancel).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
+                                    for (int i = 0; i < customActions.Count; i++)
+                                    {
+                                    <button>(@customActions[i].Title) - Cancel</button>
+                                    }
                                 }
                                 else if (a.Action == RoutneAction.Confirm)
                                 {
@@ -82,6 +81,11 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.Confirm)" />
                                         <input type="submit" value="تایید" />
                                     </form>
+                                    var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.Confirm).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
+                                    for (int i = 0; i < customActions.Count; i++)
+                                    {
+                                    <button>(@customActions[i].Title) - Confirm</button>
+                                    }
                                 }
                                 else if (a.Action == RoutneAction.ConfirmAndFinihs)
                                 {
@@ -93,6 +97,11 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.ConfirmAndFinihs)" />
                                         <input type="submit" value="تایید و پایان" />
                                     </form>
+                                    var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.ConfirmAndFinihs).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
+                                    for (int i = 0; i < customActions.Count; i++)
+                                    {
+                                    <button>(@customActions[i].Title) - ConfirmAndFinihs</button>
+                                    }
                                 }
                                 else if (a.Action == RoutneAction.Edit)
                                 {
@@ -104,6 +113,11 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.Edit)" />
                                         <input type="submit" value="نیاز به اصلاح" />
                                     </form>
+                                    var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.Edit).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
+                                    for (int i = 0; i < customActions.Count; i++)
+                                    {
+                                    <button>(@customActions[i].Title) - Edit</button>
+                                    }
                                 }
                                 // send
                                 else
@@ -116,9 +130,11 @@
                                         <input type="hidden" name="action" value="@(RoutneAction.Send)" />
                                         <input type="submit" value="ارسال" />
                                     </form>
-
-                                    
-                                   
+                                    var customActions = steps?.Where(c => c.FromStep == item.RoutineStep && c.Action == RoutneAction.Send).Select(c => c.CustomActions).FirstOrDefault()?.ToList() ?? new List<RoutineCustomAction>();
+                                    for (int i = 0; i < customActions.Count; i++)
+                                    {
+                                    <button>(@customActions[i].Title) - Send</button>
+                                    }
                                 }
                             }
 
