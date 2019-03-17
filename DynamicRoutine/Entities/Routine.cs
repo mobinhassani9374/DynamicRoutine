@@ -20,7 +20,5 @@ namespace DynamicRoutine.Entities
         public virtual ICollection<RoutineLog> Logs { get; set; }
 
         public virtual ICollection<RoutineField> Fields { get; set; }
-
-        public virtual ICollection<RoutineForm> Forms { get; set; }
     }
 }

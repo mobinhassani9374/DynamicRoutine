@@ -6,7 +6,6 @@
     Layout = null;
     var steps = (List<RoutineStep>)ViewBag.Steps;
     var type = (DashboardType)ViewBag.Type;
-    var forms = (List<RoutineForm>)ViewBag.Forms;
     var lastLog = (RoutineLog)ViewBag.LastLog;
     bool pre = false;
     if (lastLog != null && lastLog.Action == RoutneAction.Edit)
