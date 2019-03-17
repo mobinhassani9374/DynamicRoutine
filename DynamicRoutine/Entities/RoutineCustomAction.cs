@@ -14,5 +14,7 @@ namespace DynamicRoutine.Entities
         public int RoutineStepId { get; set; }
 
         public virtual RoutineStep RoutineStep { get; set; }
+
+        public virtual ICollection<RoutineCustomActionField> Fileds { get; set; }
     }
 }
