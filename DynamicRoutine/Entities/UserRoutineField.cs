@@ -15,6 +15,10 @@ namespace DynamicRoutine.Entities
 
         public int RoutineFieldId { get; set; }
 
+        public string Value { get; set; }
+
+        public string Text { get; set; }
+
         public RoutineField RoutineField { get; set; }
     }
 }
